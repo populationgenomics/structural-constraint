@@ -31,25 +31,17 @@ GENOME_BUILD = "GRCh37"
 
 LIFTOVER_EXECUTABLE = "/home/msilk/software/liftOver/liftOver"
 LIFTOVER_CHAINFILE = "/home/msilk/software/liftOver/hg38ToHg19.over.chain.gz"
-UNIPROT_GENCODE_IDMAPPINGS = "/home/msilk/scripts/alphavis/gencode_translations_matched.txt"  # **
-UNIPROT_IDS = "/home/msilk/scripts/alphavis/uniprot_enst_matches.txt"                         # **
+UNIPROT_GENCODE_IDMAPPINGS = "/home/msilk/scripts/alphavis/gencode_translations_matched.txt.gz"  # **
+UNIPROT_IDS = "/home/msilk/scripts/alphavis/uniprot_enst_matches.txt.gz"                         # **
 GENCODE_GTF = "/home/msilk/data/gencode/gencode.v39.annotation.gtf"
-GENCODE_TRANSCRIPTS = "/home/msilk/data/gencode/gencode.v39.pc_transcripts.fa"
-ENST_CODING = "/home/msilk/scripts/alphavis/enst_coding.txt"                                  # **
+ENST_CODING = "/home/msilk/scripts/alphavis/enst_coding.txt.gz"                                  # **
 
 # ** custom files from AlphaFold transcript mapping project
 
 # ===============
 
 
-# ===============
-# READ IN DATA
-read_idmapping <- function(fname) {
-  fread(fname)
-}
-
-
-read_uniprot_ids <- function(fname) {
+read_dt <- function(fname) {
   fread(fname)
 }
 
@@ -57,11 +49,6 @@ read_uniprot_ids <- function(fname) {
 read_gtf <- function(fname) {
   rtracklayer::import(fname) %>%
     .[mcols(.)$type %in% GTF_TYPE_FILTER]
-}
-
-
-read_coding_translations <- function(fname) {
-  fread(ENST_CODING)
 }
 
 
@@ -209,15 +196,14 @@ run_liftover <- function(my_table) {
 # Run
 # ===
 
-# Read in data
-idmapping = read_idmapping(UNIPROT_GENCODE_IDMAPPINGS)
-gtf = read_gtf(GENCODE_GTF)
-enst_coding = read_coding_translations(ENST_CODING)
-uniprot_ids = read_uniprot_ids(UNIPROT_IDS)
-
-
-# Select your gene here
+# Select your gene to run
 g = "ACTA1"
+
+# Read in data
+idmapping = read_dt(UNIPROT_GENCODE_IDMAPPINGS)
+gtf = read_gtf(GENCODE_GTF)
+enst_coding = read_dt(ENST_CODING)
+uniprot_ids = read_dt(UNIPROT_IDS)
 
 
 # Build summary table, pass it through LiftOver
