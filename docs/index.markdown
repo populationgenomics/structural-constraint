@@ -4,3 +4,5 @@
 
 layout: home
 ---
+
+Welcome to our simple Github Pages site to detail all things structural constraint as we go.
