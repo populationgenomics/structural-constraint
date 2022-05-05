@@ -1,5 +1,6 @@
 # LT 4/05/2022
 
+
 # Intolerance simulation module
 
 # Use a statistical model to generate correlated random intolerance
@@ -47,3 +48,4 @@ obs = qbeta(pnorm(obs), shape1 = alpha, shape2 = beta)
 # output a 2 columns file for iCn3D
 write.table(t(obs), file='structures/AF-P68133-F1-model_v2.simoe.tsv', sep='\t',
             row.names=1:nrow(sigma), col.names=FALSE, quote=FALSE)
+
