@@ -14,7 +14,8 @@ require(bio3d)
 require(MASS)
 
 # protein structure file
-# hard coded for quick prototyping
+# hard-coded for quick prototyping
+
 
 protfile = 'structures/AF-P68133-F1-model_v2.pdb'
 
