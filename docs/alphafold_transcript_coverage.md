@@ -1,6 +1,8 @@
+---
 layout: page
 title: "AlphaFold2 Transcript Coverage"
 permalink: /alphafold-transcript-coverage/
+---
 
 # Abstract
 
