@@ -1,9 +1,3 @@
----
-layout: page
-title: "AlphaFold2 Transcript Coverage"
-permalink: /alphafold-transcript-coverage/
----
-
 # Abstract
 
 The AlphaFold/AlphaFold2 database from EMBL-EBI is comprised of a single protein structure per gene symbol. These are named based on UniProt accessions with identical sequence to each AlphaFold structure, allowing precise mapping of sequence-based information to the protein tertiary structures. While useful, there is enormous clinical value in building structures from alternative transcripts for each gene symbol, where we have knowledge that these are protein-coding and expressed. Often, alternate transcripts are of significant relevance in specific tissues, such as the brain or immune cells and of specific interest to scRNA-Seq experiments. We explore the coverage of the protein-coding space in the human genome compared to the AlphaFold structures and show that 11.8% of actionable ClinVar variants are currently not represented and contained within alternate transcripts.  
