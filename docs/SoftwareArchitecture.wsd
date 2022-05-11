@@ -1,0 +1,80 @@
+@startuml softarchitect
+
+node "External databases" {
+    database "Large genomic Databases" {
+        [gnomAD v2.1.1] as gnomad2
+        [gnomAD v4]
+    }
+
+    database "gene models" {
+        [GENCODE] as gencode
+    }
+    database "Protein structures" {
+        [alphafold2] as Caf
+        [RoseTTAFold]
+    }
+
+}
+
+
+package "core modules" {
+    [Alignment] as CAlign
+    [Constraint model] as Coemod
+    [3D Factory] as Cgenerator
+    [Adjudicator] as Cadju
+    () "Protein alignment" as Ialign
+    () "o/e file" as Ioefile
+    () "regions" as Iregions
+}
+
+package "Power and Simulation" {
+    [Intolerance Simulator] as Cintsim
+    [Genomic Simulator] as Coesim
+    [Power Calculator] as Cpower
+    () "Simulated\nintolerance scores" as Isimintol
+    Cintsim -> Isimintol
+Isimintol -> Coesim
+}
+
+cloud  {
+    () "hail" as Ihail
+}
+
+gnomad2 -- Ihail
+Ihail --> Coemod
+
+() ".PBR file" as Ipbr
+Caf --> Ipbr
+Ipbr --> CAlign
+
+gencode --> CAlign
+
+
+CAlign --> Ialign
+Ialign --> Coemod
+'gnomad2 -- Coemod
+
+
+Coemod --> Ioefile
+Ioefile --> Cgenerator
+
+Cgenerator --> Iregions
+Iregions --> Cadju
+
+() "Estimated\nintolerance scores" as Imetric
+[3D Viewer] as Cview
+[Downstream Analyses] as Cscience
+
+Cadju --> Imetric
+Imetric --> Cview
+Ipbr --> Cview
+Imetric --> Cscience
+
+Coesim -> Ioefile
+Coesim .u.> Cpower : use
+gnomad2 <..  Cpower : use
+Cintsim .u.> Cpower :use
+
+
+
+@enduml
