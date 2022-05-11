@@ -32,9 +32,13 @@ clean_exp_aa = exp_aa[-which(exp_aa %in% outliers)]
 hist(clean_exp_aa)
 # normal approximation is OK here
 
-# this gives us rough estimates to simulate expected missense per aa
+# this gives us rough estimates to simulate expected number of missense per residue
+# from a Gaussian distribution
 expaa_mean = mean(clean_exp_aa)
 expaa_sd = sd(clean_exp_aa)
 
 
 ## a rough power analysis to come below
+#exp_mis = expaa_mean * 30
+#qchisq(0.95, 2*(0.5*exp_mis + 1))/2/exp_mis
+#median(cons$oe_mis, na.rm=TRUE)

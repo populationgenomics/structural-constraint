@@ -22,7 +22,7 @@ protfile = '../structures/AF-P68133-F1-model_v2.pdb'
 pdb = read.pdb(protfile)
 
 # calculate residues pairwise distance matrix
-distmat = dm(pdb)
+#distmat = dm(pdb)
 
 # calculate distance between residues based on their carbon alpha
 distmat <- dm(pdb,inds="calpha")
