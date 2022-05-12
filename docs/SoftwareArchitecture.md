@@ -14,7 +14,8 @@ The project is organised in independent components interacting through defined i
 Provides the genomic coordiantes of each nucleotide of each codon for the transect used by a given protein structure.
 #### Interfaces
 - in: gene model, e.g. GTF file for a specific version of GENCODE
-- in: 3D protein structure, e.g. PBR file from AlphaFold 2
+- input: 3D protein structure, e.g. PBR file from AlphaFold 2
+
 - out: A protein alignment file (.tsv) with the following structure
 
 | Uniprot ID | HGNC gene | ENSG gene ID |  ENST transcript ID | residue index | Reference genome | genomic position | REF |
