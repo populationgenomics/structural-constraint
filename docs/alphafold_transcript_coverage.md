@@ -168,6 +168,7 @@ Convert the GENCODE transcripts into a data.table for easy string matching.
 ## Match GENCODE transcripts to UniProt&rsquo;s ENSGs
 
 Next confirm that the GENCODE protein-coding transcripts can be matched to the UniProt-associated ENSGs to see how many GENCODE protein-coding sequences have a valid ENSG.  
+
 ENSGs with a structure: 21,649  
 ENSGs with a structure and a GENCODE sequence: 19,434  
 
