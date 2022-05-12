@@ -16,7 +16,8 @@ Provides the genomic coordiantes of each nucleotide of each codon for the transe
 - in: gene model, e.g. GTF file for a specific version of GENCODE
 - input: 3D protein structure, e.g. PBR file from AlphaFold 2
 
-- out: A protein alignment file (.tsv) with the following structure
+- output: A protein alignment file (.tsv) with the following structure:
+
 
 | Uniprot ID | HGNC gene | ENSG gene ID |  ENST transcript ID | residue index | Reference genome | genomic position | REF |
 | --- | --- | --- | --- | --- | --- | --- | ---|
