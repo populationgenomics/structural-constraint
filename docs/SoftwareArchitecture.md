@@ -2,7 +2,8 @@
 
 ## Overview
 
-The structural-constraint project develops a new method for identifying compact 3D regions under missense constraint within protein tertiary structures
+The structural-constraint project develops a new method for identifying compact 3D regions under missense constraint within protein tertiary structures.
+
 
 The project is organised in independent components interacting through defined interfaces
 
