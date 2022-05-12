@@ -61,7 +61,7 @@ Quick shell command to parse the names from the AF2 structure filenames.
 20,504 unique UniProt IDs to use.  
 
 
-## Get UniProt metadata and matched ENSGs
+## Get UniProt metadata and matched Ensembl gene IDs
 
 To match the UniProt accessions to GENCODE, I&rsquo;m using the ENSG&rsquo;s paired with each UniProt structure in the UniProtKB idmapping table. For whatever reasons, matching GENCODE ENST&rsquo;s to UniProtKB&rsquo;s listed ENST&rsquo;s directly is very lossy (even disregarding transcript version numbers). Here we&rsquo;re just getting the idmapping table, filtering to UniProts where we have an AlphaFold2 structure and splitting out the ENSG from `ENSG000001234; ENSG000001235` into separate rows.  
 
