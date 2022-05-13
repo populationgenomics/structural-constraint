@@ -17,7 +17,7 @@ Provides the genomic coordinates of each nucleotide of each codon for the transe
 #### Interfaces
 - input: A gene model, e.g. GTF file for a specific version of GENCODE
 
-- input: 3D protein structure, e.g. PBR file from AlphaFold 2
+- input: 3D protein structure, e.g. PDB file from AlphaFold 2
 
 - output: A protein alignment file (.tsv) with the following structure:
 
