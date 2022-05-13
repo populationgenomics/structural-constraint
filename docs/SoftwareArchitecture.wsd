@@ -43,9 +43,9 @@ cloud  {
 gnomad2 -- Ihail
 Ihail --> Coemod
 
-() ".PBR file" as Ipbr
-Caf --> Ipbr
-Ipbr --> CAlign
+() ".PDB file" as Ipdb
+Caf --> Ipdb
+Ipdb --> CAlign
 
 gencode --> CAlign
 
@@ -67,7 +67,7 @@ Iregions --> Cadju
 
 Cadju --> Imetric
 Imetric --> Cview
-Ipbr --> Cview
+Ipdb --> Cview
 Imetric --> Cscience
 
 Coesim -> Ioefile
