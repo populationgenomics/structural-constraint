@@ -11,22 +11,22 @@
 ## using the missense data at gene level from gnomAD v2.1
 
 # gnomAD v2.1 intolerance data at gene level
-cons = read.delim('../structures/gnomad.v2.1.1.lof_metrics.by_gene.txt.bgz')
-exp_aa = cons$exp_mis / cons$cds_length * 3
+cons <- read.delim("../structures/gnomad.v2.1.1.lof_metrics.by_gene.txt.bgz")
+exp_aa <- cons$exp_mis / cons$cds_length * 3
 
 summary(exp_aa)
 hist(exp_aa)
 # long tail to the left
 
 # look at 10 genes with very low exp_aa
-cons[order(exp_aa)[1:10],]
+cons[order(exp_aa)[1:10], ]
 
 nrow(cons)
 boxplot(exp_aa)
 
 # remove outliers
-outliers = boxplot(exp_aa, plot=FALSE)$out
-clean_exp_aa = exp_aa[-which(exp_aa %in% outliers)]
+outliers <- boxplot(exp_aa, plot = FALSE)$out
+clean_exp_aa <- exp_aa[-which(exp_aa %in% outliers)]
 
 # replot
 hist(clean_exp_aa)
@@ -34,11 +34,11 @@ hist(clean_exp_aa)
 
 # this gives us rough estimates to simulate expected number of missense per residue
 # from a Gaussian distribution
-expaa_mean = mean(clean_exp_aa)
-expaa_sd = sd(clean_exp_aa)
+expaa_mean <- mean(clean_exp_aa)
+expaa_sd <- sd(clean_exp_aa)
 
 
 ## a rough power analysis to come below
-#exp_mis = expaa_mean * 30
-#qchisq(0.95, 2*(0.5*exp_mis + 1))/2/exp_mis
-#median(cons$oe_mis, na.rm=TRUE)
+# exp_mis = expaa_mean * 30
+# qchisq(0.95, 2*(0.5*exp_mis + 1))/2/exp_mis
+# median(cons$oe_mis, na.rm=TRUE)
