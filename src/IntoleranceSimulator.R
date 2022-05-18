@@ -11,14 +11,14 @@
 # for multivariate Gaussian RNG
 require(MASS)
 
-source('constraint_utils.R')
+source("constraint_utils.R")
 
 # protein structure file
 # hard-coded for quick prototyping
 
 prot_file <- "../structures/AF-P68133-F1-model_v2.pdb"
 
-dist_mat = get_dist_mat(prot_file)
+dist_mat <- get_dist_mat(prot_file)
 
 # calculate average distance between neighboring residues
 aadist <- mean(diag(dist_mat[-nrow(dist_mat), -1]))
@@ -31,7 +31,7 @@ l <- aadist * 5
 # sigma = exp(-0.5 * (dist_mat/l)^2)
 
 # exponential kernel is less smooth
-sigma <- exp(- dist_mat / l)
+sigma <- exp(-dist_mat / l)
 
 
 ## check that sigma is positive definite
