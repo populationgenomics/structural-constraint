@@ -22,24 +22,24 @@ stopifnot(file.exists(file_in))
 
 read_structure <- function(filename) {
   read.pdb(filename) %>%
-    return
+    return()
 }
 
 
 extract_atom_table <- function(pdb) {
   pdb[["atom"]] %>%
-    as.data.table %>%
-    return
+    as.data.table() %>%
+    return()
 }
 
 
 calc_atom_dists <- function(atoms, method = "euclidean") {
   atoms[, .(x, y, z)] %>%
     dist(method = method) %>%
-    as.matrix %>%
+    as.matrix() %>%
     round(3) %>%
-    as.data.table %>%
-    return
+    as.data.table() %>%
+    return()
 }
 
 
@@ -52,27 +52,30 @@ min_resi_dists <- function(atom_dists, atoms) {
   cbind(atoms[, .(resno)], atom_dists) %>%
     .[, map(.SD, min), resno] %>%
     .[, resno := NULL] %>%
-    t %>%
-    as.data.table %>%
+    t() %>%
+    as.data.table() %>%
     cbind(atoms[, .(resno)], .) %>%
     .[, map(.SD, min), resno] %>%
     .[, resno := NULL] %>%
-    return
+    return()
 }
 
 
 # Bind resid, chain, resno columns to the dist table
 make_dist_table <- function(resi_dists, atoms) {
-  cbind(atoms[, .(resid, chain, resno)] %>% .[!duplicated(.)],
-        resi_dists) %>%
-    return
+  cbind(
+    atoms[, .(resid, chain, resno)] %>% .[!duplicated(.)],
+    resi_dists
+  ) %>%
+    return()
 }
 
 
 write_output_table <- function(dist_table, file) {
   fwrite(dist_table,
-         file,
-         sep = "\t")
+    file,
+    sep = "\t"
+  )
 }
 
 
@@ -81,7 +84,7 @@ write_output_table <- function(dist_table, file) {
 # into memory as an object, and also passed to most of the
 # subsequent functions.
 atoms <- read_structure(file_in) %>%
-  extract_atom_table
+  extract_atom_table()
 
 calc_atom_dists(atoms) %>%
   min_resi_dists(atoms) %>%
