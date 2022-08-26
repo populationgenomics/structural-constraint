@@ -6,20 +6,12 @@
 
 
 # target transcripts for panel of initial 10 genes selected by the structural constraint project
-# TODO should be in an external file
+# read from file 'transcripts.json'
 
-TRANSCRIPTS = [
-    "ENST00000366684", # ACTA1
-    "ENST00000371953",  # PTEN
-    "ENST00000298910", # LRRK2
-    "ENST00000320868", # HBA1
-    "ENST00000359125", # KCNQ2
-    "ENST00000393087", # SERPINA1
-    "ENST00000281708",  # FBXW7
-    "ENST00000640769", # RTTN
-    "ENST00000270139", # IFNAR1
-    "ENST00000262030" # ATP5F1B
-]
+import json
+
+transcripts_file = open("transcripts.json", "r")
+TRANSCRIPTS = json.load(transcripts_file)
 
 # connect to hail, using appropriate requester_pays setup
 import hail as hl
