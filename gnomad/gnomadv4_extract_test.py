@@ -14,7 +14,7 @@ from cpg_utils.hail_batch import output_path
 
 # load list of transcripts
 # a panel of 10 genes selected for initial analysis by the structural-constraint project
-transcripts_file = open("transcripts.json", "r")
+transcripts_file = open('transcripts.json', 'r')
 TRANSCRIPTS = json.load(transcripts_file)
 
 # connect to hail, using appropriate requester_pays setup
@@ -55,13 +55,14 @@ mt = mt.transmute_entries(GT=hl.experimental.lgt_to_gt(mt.LGT, mt.LA))
 mt = hl.variant_qc(mt)
 
 # keep only the rows
-ht = mt.rows()
+# persist to avoid double evaluation later 
+ht = mt.rows().persist()
 
 # safe guard, before writting to an Australian bucket. Limit to 1 000 000 variants
 # note that there is no need to write to Australia, since this is an intermediary result
 # it would be preferable to have a bucket hosted in the USA
 if (ht.count() < 1e6) :
     # use cpg utils to find proper path (bucket will change with access level)
-    ht.write(output_path("small_ht"), overwrite=True)
+    ht.write(output_path('small_ht'), overwrite=True)
 
 
