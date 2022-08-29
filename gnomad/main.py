@@ -33,7 +33,7 @@ cluster = dataproc.setup_dataproc(
 cluster.add_job('gnomadv4_extract_test.py', job_name='first_v4_extract_test')
 
 # add the needed files
-subprocess.run(['gsutil cp transcripts.json', output_path('transcripts.json')]) 
+subprocess.run(['gsutil', 'cp', 'transcripts.json', output_path('transcripts.json')], check=True)
 
 
 # Don't wait, which avoids resubmissions if this job gets preempted.
