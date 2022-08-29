@@ -40,7 +40,8 @@ big_vds = hl.vds.read_vds('gs://gnomad/v4.0/raw/exomes/gnomad_v4.0.vds')
 # zcat gencode.v39.basic.annotation.gtf.gz | bgzip -c > gencode.v39.basic.annotation.gtf.bgz
 #
 
-GENCODE = 'gencode.v39.basic.annotation.gtf.bgz'
+#GENCODE = 'gencode.v39.basic.annotation.gtf.bgz'
+GENCODE = 'gs://cpg-reference/gencode/gencode.v39.annotation.gtf.bgz'
 target_intervals = hl.experimental.get_gene_intervals(transcript_ids=TRANSCRIPTS, reference_genome='GRCh38', gtf_file=GENCODE)
 small_vds = hl.vds.filter_intervals(big_vds, target_intervals, split_reference_blocks=False, keep=True)
 
@@ -63,6 +64,6 @@ ht = mt.rows().persist()
 # it would be preferable to have a bucket hosted in the USA
 if (ht.count() < 1e6) :
     # use cpg utils to find proper path (bucket will change with access level)
-    ht.write(output_path('small_ht'), overwrite=True)
+    ht.write(output_path('small.ht'), overwrite=True)
 
 
