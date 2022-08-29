@@ -31,6 +31,11 @@ cluster = dataproc.setup_dataproc(
 
 cluster.add_job('gnomadv4_extract_test.py', job_name='first_v4_extract_test')
 
+# add the needed files
+import command 
+
+res = command.run(['gsutil cp transcripts.json gs://cpg-constraint-main/transcripts.json']) 
+print(res.output)
 
 # Don't wait, which avoids resubmissions if this job gets preempted.
 batch.run(wait=False)
