@@ -12,16 +12,22 @@ service_backend = hb.ServiceBackend(
     billing_project=config['hail']['billing_project'], remote_tmpdir=remote_tmpdir()
 )
 
-batch = hb.Batch(name='dataproc example', backend=service_backend)
+batch = hb.Batch(name='dataproc gnomADv4', backend=service_backend)
 
 
 cluster = dataproc.setup_dataproc(
     batch,
-    max_age='1h',
-    packages=['click', 'selenium'],
-    init=['gs://cpg-reference/hail_dataproc/install_common.sh'],
-    cluster_name='My Cluster with max-age=1h',
+    max_age='100h',
+    packages=['click', 'selenium'], # is this needed ?
+    init=['gs://cpg-reference/hail_dataproc/install_common.sh'], # what does this do ?
+    cluster_name='gnomADv4',
+    worker_machine_type = 'n1-standard-8',
+    num_workers = 0,
+    num_secondary_workers = 20,
+    #secondary_worker_boot_disk_size = 20, # is this needed ?
+    region='us-central1'
 )
+
 cluster.add_job('gnomadv4_extract_test.py', job_name='first_v4_extract_test')
 
 
