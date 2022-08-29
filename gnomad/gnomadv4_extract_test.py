@@ -14,7 +14,7 @@ from cpg_utils.hail_batch import output_path
 
 # load list of transcripts
 # a panel of 10 genes selected for initial analysis by the structural-constraint project
-transcripts_file = open('transcripts.json', 'r')
+transcripts_file = open(output_path('transcripts.json'), 'r')
 TRANSCRIPTS = json.load(transcripts_file)
 
 # connect to hail, using appropriate requester_pays setup
