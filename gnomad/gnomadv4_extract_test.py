@@ -62,13 +62,17 @@ mt = hl.variant_qc(mt)
 
 # keep only the rows
 # persist to avoid double evaluation later 
-ht = mt.rows().persist()
+#ht = mt.rows().persist()
+
+# remove persist which is suspected to trigger a cryptic error on the dataproc
+ht = mt.rows()
 
 # safe guard, before writting to an Australian bucket. Limit to 1 000 000 variants
 # note that there is no need to write to Australia, since this is an intermediary result
 # it would be preferable to have a bucket hosted in the USA
-if (ht.count() < 1e6) :
+#
+# removed the safe guard after finding the max. size of the rows Table should be aroung 20Gb
+#if (ht.count() < 1e6) :
     # use cpg utils to find proper path (bucket will change with access level)
-    ht.write(output_path('small.ht'), overwrite=True)
-
+ht.write(output_path('small.ht'), overwrite=True)
 
