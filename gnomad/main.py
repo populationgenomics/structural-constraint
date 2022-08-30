@@ -27,7 +27,8 @@ cluster = dataproc.setup_dataproc(
     num_workers = 2,
     num_secondary_workers = 20,
     #secondary_worker_boot_disk_size = 20, # is this needed ?
-    region='us-central1'
+    region='us-central1',
+    requester_pays_allow_all=True
 )
 
 cluster.add_job('gnomadv4_extract_test.py', job_name='first_v4_extract_test')

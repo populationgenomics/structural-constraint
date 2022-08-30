@@ -21,12 +21,15 @@ with AnyPath(output_path('transcripts.json')).open() as transcripts_file:
 
 # connect to hail, using appropriate requester_pays setup
 
-hl.init(default_reference='GRCh38',
-        spark_conf = {
-            'spark.hadoop.fs.gs.requester.pays.mode': 'CUSTOM',
-            'spark.hadoop.fs.gs.requester.pays.buckets': 'gnomad',
-            'spark.hadoop.fs.gs.requester.pays.project.id': 'constraint-232598',
-        })
+# remove the requester pay conf that bothers the analysis runner
+#hl.init(default_reference='GRCh38',
+#        spark_conf = {
+#            'spark.hadoop.fs.gs.requester.pays.mode': 'CUSTOM',
+#            'spark.hadoop.fs.gs.requester.pays.buckets': 'gnomad',
+#            'spark.hadoop.fs.gs.requester.pays.project.id': 'constraint-232598',
+#        })
+
+hl.init(default_reference='GRCh38')
 
 # gnomAD v4 exomes VDS
 big_vds = hl.vds.read_vds('gs://gnomad/v4.0/raw/exomes/gnomad_v4.0.vds')
