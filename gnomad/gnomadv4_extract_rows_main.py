@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Extract rows fron gnomAD v4"""
+"""Extract rows from gnomAD v4"""
 
 import hailtop.batch as hb
 from cpg_utils.hail_batch import get_config, remote_tmpdir
