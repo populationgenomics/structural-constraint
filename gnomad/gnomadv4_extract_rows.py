@@ -10,10 +10,10 @@ from cpg_utils.hail_batch import output_path
 hl.init(default_reference='GRCh38')
 
 # gnomAD v4 exomes VDS
-big_vds = hl.vds.read_vds('gs://gnomad/v4.0/raw/exomes/gnomad_v4.0.vds')
+vds = hl.vds.read_vds('gs://gnomad/v4.0/raw/exomes/gnomad_v4.0.vds')
 
 # densify as a MatrixTable
-mt = hl.vds.to_dense_mt(big_vds)
+mt = hl.vds.to_dense_mt(vds)
 
 # remove REF/REF rows left after densification
 mt = mt.filter_rows(hl.len(mt.alleles) < 2, keep=False)
