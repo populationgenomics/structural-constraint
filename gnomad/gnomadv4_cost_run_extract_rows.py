@@ -11,7 +11,8 @@ from cpg_utils.hail_batch import output_path
 hl.init(default_reference='GRCh38')
 
 # gnomAD v4 exomes VDS
-big_vds = hl.vds.read_vds('gs://gnomad/v4.0/raw/exomes/gnomad_v4.0.vds')
+gnomad_v4_0_raw_exomes_vds_url = 'gs://gnomad/v4.0/raw/exomes/gnomad_v4.0.vds'
+big_vds = hl.vds.read_vds(gnomad_v4_0_raw_exomes_vds_url)
 
 # subset to ~5% of partitions (big_vds has 47960 partitions)
 small_vds = hl.vds.VariantDataset(
