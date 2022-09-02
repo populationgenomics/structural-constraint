@@ -19,7 +19,7 @@ batch = hb.Batch(name='dataproc gnomADv4', backend=service_backend)
 cluster = dataproc.setup_dataproc(
     batch,
     max_age='10h',
-    packages=['çpg-utils']
+    packages=['cpg-utils'],
     init=[],
     cluster_name='gnomADv4',
     worker_machine_type = 'n1-standard-8',
