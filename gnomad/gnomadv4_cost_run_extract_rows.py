@@ -7,12 +7,14 @@
 import hail as hl
 from cpg_utils.hail_batch import output_path
 
+# gnomAD v4 exomes VDS
+GNOMAD_V4_0_RAW_EXOMES_VDS_URL = 'gs://gnomad/v4.0/raw/exomes/gnomad_v4.0.vds'
+
 # connect to hail, requester_pays parameters are setup in the dataproc parameters
 hl.init(default_reference='GRCh38')
 
-# gnomAD v4 exomes VDS
-gnomad_v4_0_raw_exomes_vds_url = 'gs://gnomad/v4.0/raw/exomes/gnomad_v4.0.vds'
-big_vds = hl.vds.read_vds(gnomad_v4_0_raw_exomes_vds_url)
+# read vds
+big_vds = hl.vds.read_vds(GNOMAD_V4_0_RAW_EXOMES_VDS_URL)
 
 # subset to ~5% of partitions (big_vds has 47960 partitions)
 small_vds = hl.vds.VariantDataset(
