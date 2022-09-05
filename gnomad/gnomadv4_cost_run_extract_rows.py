@@ -33,8 +33,8 @@ mt = mt.transmute_entries(GT=hl.experimental.lgt_to_gt(mt.LGT, mt.LA))
 mt = hl.variant_qc(mt)
 
 # keep only the rows and repartition
-# given the drastic size reduction by summarizing the columns, reduce the number of partitions ~50 fold
-ht = mt.rows().naive_coalesce(1000)
+# given the drastic size reduction by summarizing the columns, reduce the number of partitions ~10 fold
+ht = mt.rows().repartition(250, shuffle=False)
 
 # write table to cpg bucket
 ht.write(output_path('gnomad_v4.0_raw_exomes.costrun.ht'), overwrite=True)
