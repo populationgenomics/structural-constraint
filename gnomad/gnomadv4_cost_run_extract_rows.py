@@ -4,7 +4,6 @@
 ## annotate gnomADv4 with frequencies and variant QC standard fields
 ## export the rows as a hail.Table on a cpg bucket
 
-from random import shuffle
 import hail as hl
 from cpg_utils.hail_batch import output_path
 
