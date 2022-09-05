@@ -24,7 +24,8 @@ cluster = dataproc.setup_dataproc(
     cluster_name='gnomADv4',
     worker_machine_type = 'n1-standard-8',
     num_workers = 2,
-    worker_boot_disk_size = 25, # total HDFS space 50 GB, HDFS peak-use during the cost test run was 21 GiB
+    # note: the image requires at least 30 GB on boot disk
+    worker_boot_disk_size = 50, # total HDFS space 100 GB, HDFS peak-use during the cost test run was 21 GiB
     num_secondary_workers = 10, # total vCPUs ~ 80 + 16, decreased compared to cost test run to reduce inactive secondary workers during table write
     region='us-central1',
     requester_pays_allow_all=True
