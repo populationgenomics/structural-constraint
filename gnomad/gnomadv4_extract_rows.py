@@ -26,7 +26,7 @@ mt = mt.transmute_entries(GT=hl.experimental.lgt_to_gt(mt.LGT, mt.LA))
 mt = hl.variant_qc(mt)
 
 # keep only the rows and repartition
-# given the drastic size reduction by summarizing the columns, reduce the number of partitions ~10 fold
+# given the drastic size reduction by summarizing the columns, reduce the number of partitions ~50 fold
 ht = mt.rows().repartition(1000, shuffle=False)
 
 # write table to cpg bucket
