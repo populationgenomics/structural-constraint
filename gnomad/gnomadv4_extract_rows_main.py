@@ -18,14 +18,14 @@ batch = hb.Batch(name='dataproc gnomADv4', backend=service_backend)
 
 cluster = dataproc.setup_dataproc(
     batch,
-    max_age='10h',
-    packages=['çpg-utils']
+    max_age='30h', # increased for safety
+    packages=['cpg-utils'],
     init=[],
     cluster_name='gnomADv4',
     worker_machine_type = 'n1-standard-8',
     num_workers = 2,
     worker_boot_disk_size = 400, # total HDFS space 800GB, HDFS peak use during test run was 450 GiB
-    num_secondary_workers = 100, # total vCPUs ~ 800, 5-fold increase to reduce run-time
+    num_secondary_workers = 50, # total vCPUs ~ 400, for a result Table with 1000 partitions 
     region='us-central1',
     requester_pays_allow_all=True
 )
