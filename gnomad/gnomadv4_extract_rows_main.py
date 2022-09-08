@@ -24,6 +24,7 @@ cluster = dataproc.setup_dataproc(
     cluster_name='gnomADv4',
     worker_machine_type = 'n1-standard-8',
     num_workers = 2,
+    master_boot_disk_size = 500, # increase disk space, as a potential fix for dataproc crash
     worker_boot_disk_size = 400, # total HDFS space 800GB, HDFS peak use during test run was 450 GiB
     num_secondary_workers = 50, # total vCPUs ~ 400, for a result Table with 1000 partitions 
     region='us-central1',
