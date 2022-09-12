@@ -10,7 +10,7 @@
 repartition step:
 
 ```sh
-analysis-runner --dataset constraint \
+analysis-runner --dataset constraint --output-dir "."\
     --access-level test 
     --description "repartition 10 transcripts site-onlt Table" \
     python3 10transcripts_repartition.py
