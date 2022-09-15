@@ -3,10 +3,10 @@
 ## repartition 10 transcripts test dataset from gnomADv4
 
 import hail as hl
-from cpg_utils.hail_batch import output_path
+from cpg_utils.hail_batch import output_path, init_batch
 
-hl.init(default_reference='GRCh38')
-
+#hl.init(default_reference='GRCh38')
+init_batch()
 # gnomAD v4 10 transcripts test table
 ht = hl.read_table('gs://cpg-constraint-main/gv4_10transcripts_6/small.ht/')
 
