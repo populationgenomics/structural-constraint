@@ -18,7 +18,7 @@ batch = hb.Batch(name='dataproc gnomADv4', backend=service_backend)
 
 cluster = dataproc.setup_dataproc(
     batch,
-    max_age='30h', # increased for safety
+    max_age='400h', # increased for safety
     packages=['cpg-utils'],
     init=[],
     cluster_name='gnomADv4',
@@ -27,7 +27,8 @@ cluster = dataproc.setup_dataproc(
     master_boot_disk_size = 1000, # increase disk space even more, as a potential fix for dataproc crash
     worker_boot_disk_size = 1000, # total HDFS space 2TB, HDFS peak use during test run was 450 GiB
     secondary_worker_boot_disk_size = 500, # increase disk space of secondary workers as well
-    num_secondary_workers = 50, # total vCPUs ~ 400, for a result Table with 1000 partitions 
+    num_secondary_workers = 100, # total vCPUs ~ 800, for a result Table with 1000 partitions
+    autoscaling_policy = 'max100', # allows decommission of useless workers
     region='us-central1',
     requester_pays_allow_all=True
 )
