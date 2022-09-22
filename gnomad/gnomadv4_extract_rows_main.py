@@ -26,11 +26,12 @@ cluster = dataproc.setup_dataproc(
     num_workers = 2,
     master_boot_disk_size = 1000, # increase disk space even more, as a potential fix for dataproc crash
     worker_boot_disk_size = 1000, # total HDFS space 2TB, HDFS peak use during test run was 450 GiB
-    secondary_worker_boot_disk_size = 500, # increase disk space of secondary workers as well
+    secondary_worker_boot_disk_size = 100, # reduce disk space on secondary workers
     num_secondary_workers = 100, # total vCPUs ~ 800, for a result Table with 1000 partitions
     autoscaling_policy = 'max100', # allows decommission of useless workers
     region='us-central1',
-    requester_pays_allow_all=True
+    requester_pays_allow_all=True,
+    stop_cluster=False # for debugging cluster crash
 )
 
 cluster.add_job('gnomadv4_extract_rows.py', job_name='gnomadv4_extract_rows')
