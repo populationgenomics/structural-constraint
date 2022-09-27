@@ -15,7 +15,7 @@
 
 # file names and parameters are hard-coded for this prototype
 
-source("constraint_utils.R")
+source("src/constraint_utils.R")
 
 ## calculate upper bound of the o/e confidence interval
 get_oe_ci_up <- function(observed, expected, alpha = 0.05) {
@@ -42,10 +42,10 @@ get_region_metric <- function(i_region, alpha, regions, oe_data) {
 ### main
 ## inputs
 # protein structure file
-prot_file <- "../structures/AF-P68133-F1-model_v2.pdb"
+prot_file <- "structures/AF-P68133-F1-model_v2.pdb"
 
 # o/e file, out of the GenomicSimulator or a genomic database
-oe_file <- "../structures/AF-P68133-F1-model_v2.simmut.tsv"
+oe_file <- "gnomad/prototype/ENST00000366684_oe.tsv"
 
 oe <- read.table(
   file = oe_file, sep = "\t",
@@ -72,7 +72,7 @@ regions_list <- lapply(seq_len(n), function(i_residue) {
 
   # calculate the upper bound of the o/e confidence interval for each region
   regions_metric <- sapply(seq_len(n), function(i) {
-    get_region_metric(i, 0.2, this_aa_regions, oe_data = oe)
+    get_region_metric(i, 0.0001, this_aa_regions, oe_data = oe)
   })
 
   # find index of best region: that with the lowest upper bound of o/e CI
@@ -130,9 +130,10 @@ intolerance_scores <- t(apply(residue_to_region, 1, function(one_row) {
 
 # intolerance score and region per residue
 write.table(intolerance_scores,
-  file = "../structures/AF-P68133-F1-model_v2.intol.tsv", sep = "\t",
+  file = "gnomad/prototype/ENST00000366684_intol.tsv", sep = "\t",
   row.names = FALSE, col.names = TRUE
 )
 
 # for visualisation in iCn3D
-export_iCn3D(intolerance_scores, "../structures/AF-P68133-F1-model_v2.intol.iCn3D.tsv")
+intolerance_scores[,"oe"] = intolerance_scores[, "oe"]/max(intolerance_scores[,"oe"])
+export_iCn3D(intolerance_scores, "gnomad/prototype/ENST00000366684_intol_iCn3D.tsv")
