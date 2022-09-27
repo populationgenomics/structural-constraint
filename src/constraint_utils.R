@@ -42,6 +42,6 @@ export_iCn3D <- function(oe_data, file) {
   # second column:simulated oe value on 0-100 range
   write.table(oe,
     file = file, sep = "\t",
-    row.names = 1:nrow(sigma), col.names = FALSE, quote = FALSE
+    row.names = seq_len(length(oe)), col.names = FALSE, quote = FALSE
   )
 }
