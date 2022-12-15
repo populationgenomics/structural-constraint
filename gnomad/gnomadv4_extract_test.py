@@ -46,7 +46,7 @@ big_vds = hl.vds.read_vds('gs://gnomad/v4.0/raw/exomes/gnomad_v4.0.vds')
 #
 
 #GENCODE = 'gencode.v39.basic.annotation.gtf.bgz'
-GENCODE = 'gs://cpg-reference/gencode/gencode.v39.annotation.gtf.bgz'
+GENCODE = 'gs://cpg-common-main/references/gencode/gencode.v39.annotation.gtf.bgz'
 target_intervals = hl.experimental.get_gene_intervals(transcript_ids=TRANSCRIPTS, reference_genome='GRCh38', gtf_file=GENCODE)
 small_vds = hl.vds.filter_intervals(big_vds, target_intervals, split_reference_blocks=False, keep=True)
 
