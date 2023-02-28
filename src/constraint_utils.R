@@ -3,6 +3,7 @@
 # utility function for 3D missense constraint metric
 
 ## required packages
+require(tidyverse)
 # for .PDB structures
 require(bio3d)
 
@@ -16,7 +17,8 @@ get_dist_mat <- function(pdb_file) {
   # calculate distance between residues based on their carbon alpha
   dist_mat <- dm(pdb, inds = "calpha")
 
-  # dist_mat is upper triangular with empty diagonal: add diagonal, fill lower triangle, convert to matrix
+  # dist_mat is upper triangular with empty diagonal:
+  # add diagonal, fill lower triangle, convert to matrix
   dist_mat <- as.matrix(dist_mat)
   dist_mat[is.na(dist_mat)] <- 0
   dist_mat <- dist_mat + t(dist_mat)
@@ -44,4 +46,9 @@ export_iCn3D <- function(oe_data, file) {
     file = file, sep = "\t",
     row.names = seq_len(length(oe)), col.names = FALSE, quote = FALSE
   )
+}
+
+## calculate upper bound of the o/e confidence interval
+get_oe_ci_up <- function(observed, expected, alpha = 0.05) {
+  return(qchisq((1 - alpha / 2), 2 * (observed + 1)) / 2 / expected)
 }
