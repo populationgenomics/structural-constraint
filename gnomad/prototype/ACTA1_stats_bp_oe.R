@@ -39,8 +39,8 @@ summarise(
     exp = sum(exp, na.rm = TRUE))
 
 plot(density(oe_codon$exp), main = "expected missense per codon")
-#hist(oe_codon$exp)
 
-# save codon level oe file 
+
+# save codon level oe file
 out_file <- "gnomad/prototype/ENST00000366684_oe.tsv"
 write_tsv(oe_codon, out_file, col_names = FALSE)
