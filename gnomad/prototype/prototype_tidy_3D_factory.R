@@ -1,5 +1,6 @@
 # LT 08/12/2022
 # exploration of 3D factory with tidyverse
+# not functional, just for the record
 
 library(tidyverse)
 
@@ -122,12 +123,9 @@ model <- selected %>%
     group_by(residue_index) %>% slice_min(oe) %>% select(residue_index, gamma = oe) %>% ungroup() %>%
     inner_join(oe) %>%
     # negative log-likelihood and AIC
-    mutate(nLL = dpois(obs, gamma * exp))
+    mutate(nLL = dpois(obs, gamma * exp, log = TRUE)) %>%
+    # get AIC
+    summarise(AIC = 2 * sum(nLL) + 2 * n_distinct(gamma))
 
-best_AIC = 2 * sum(model$nLL) + 2 * 
-        AIC = 2 * nLL + 2 * n_distinct(gamma)
+best_AIC = 2 * sum(model$nLL) + 2 * nrow(selected)
 
-
-
-
-# one round of forward selection
