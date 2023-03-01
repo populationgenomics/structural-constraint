@@ -74,6 +74,15 @@ nLLs = sapply(1:nrow(bubbles), function(i) {
 })
 print(min(nLLs))
 
+
+# stop here for the sake of the demo: one round of model selection is 
+# enough for LRRK2
+# completing the round and starting the next one would involve
+# get AIC and check if its lower than best AIC so far. if not stop
+# update selected with new bubble
+# remove bubble from pool candidate
+# see example in ACTA1_model_selection.R
+
 # likelihood ratio test
 onezoneLL=getLL(selected$bubble)
 twozoneLL = min(nLLs)
@@ -83,14 +92,13 @@ twozoneLL = min(nLLs)
 bubbles[which.min(nLLs),]
 ibest <- which.min(nLLs)
 
-loe = oe %>% slice(setdiff(1:n, bubbles$bubble[[ibest]]))
-        gamma = sum(loe$obs)/sum(loe$exp)
-        nLL = -dpois(loe$obs, gamma * loe$exp, log = TRUE)
+loe <- oe %>% slice(setdiff(1:n, bubbles$bubble[[ibest]]))
+gamma <- sum(loe$obs)/sum(loe$exp)
 
 #save result
-res = data.frame(index=1:n, gamma = 0)
-res$gamma[setdiff(1:n, bubbles$bubble[[ibest]])] = gamma
-res$gamma[bubbles$bubble[[ibest]]] = bubbles$oe[ibest]
+res <- data.frame(index=1:n, gamma = 0)
+res$gamma[setdiff(1:n, bubbles$bubble[[ibest]])] <- gamma
+res$gamma[bubbles$bubble[[ibest]]] <- bubbles$oe[ibest]
 
 gam <- round(res$gamma * 100)
 
@@ -101,79 +109,3 @@ write.table(gam,
     file = "gnomad/prototype/ENST00000298910_sel.tsv", sep = "\t",
     row.names = seq_len(length(gam)), col.names = FALSE, quote = FALSE
 )
-
-
-
-# all the rest bellow should be ignored 
-# one round of forward selection
-
-# do a loop for now
-for (i in 1:nrow(bubbles)) {
-    selected %>% add_row(slice(bubbles, i)) %>%
-    unnest(bubble) %>% rename(residue_index = bubble) %>%
-    group_by(residue_index) %>% slice_min(oe) %>% select(residue_index, gamma = oe) %>% ungroup() %>%
-    inner_join(oe) %>%
-    # negative log-likelihood and AIC
-    mutate(nLL = dpois(obs, gamma * exp)) %>%
-    # get AIC
-    summarise(AIC = 2 * sum(nLL) + 2 * n_distinct(gamma))
-}
-bubbles %>% rowid_to_column("index") %>% rowwise() %>% mutate(
-    model = list(
-        selected %>% add_row(cur_data()) %>%
-        unnest(bubble) %>% rename(residue_index = bubble) %>%
-        group_by(residue_index) %>% slice_min(oe) %>% select(residue_index, gamma = oe) %>% ungroup() %>%
-        inner_join(oe) %>%
-        # negative log-likelihood and AIC
-        mutate(nLL = dpois(obs, gamma * exp)) %>%
-        # get AIC
-        summarise(AIC = 2 * sum(nLL) + 2 * n_distinct(gamma))))
-
-bubbles %>% rowid_to_column("index") %>% rowwise() %>% mutate(
-    model = add_row(selected,cur_data())
-        selected %>% add_row(cur_data())
-
-# problems with cur_data(), try map
-AICs = map(1:nrow(bubbles), ~ {
-    i = .
-    selected %>% add_row(slice(bubbles, i)) %>%
-    unnest(bubble) %>% rename(residue_index = bubble) %>%
-    group_by(residue_index) %>% slice_min(oe) %>% select(residue_index, gamma = oe) %>% ungroup() %>%
-    inner_join(oe, by="residue_index") %>%
-    # negative log-likelihood and AIC
-    mutate(nLL = dpois(obs, gamma * exp)) %>%
-    # get AIC
-    summarise(AIC = 2 * sum(nLL) + 2 * n_distinct(gamma)) %>% pull(AIC)
-})
-
-AICs = sapply(1:nrow(bubbles), function(i) {
-    selected %>% add_row(slice(bubbles, i)) %>%
-    unnest(bubble) %>% rename(residue_index = bubble) %>%
-    group_by(residue_index) %>% slice_min(oe) %>% select(residue_index, gamma = oe) %>% ungroup() %>%
-    inner_join(oe, by="residue_index") %>%
-    # negative log-likelihood and AIC
-    mutate(nLL = dpois(obs, gamma * exp)) %>%
-    # get AIC
-    summarise(AIC = 2 * sum(nLL) + 2 * n_distinct(gamma)) %>% pull(AIC) 
-})
-
-bub <- bubbles %>% rowid_to_column("index")
- mutate(bub, AIC = map(index, ~ {
-    add_row(selected, slice(bubbles,.)) %>%
-    unnest(bubble) %>% rename(residue_index = bubble) %>%
-    group_by(residue_index) %>% slice_min(oe) %>% select(residue_index, gamma = oe) %>% ungroup() %>%
-    inner_join(oe, by="residue_index") %>%
-    # negative log-likelihood and AIC
-    mutate(nLL = dpois(obs, gamma * exp)) %>%
-    # get AIC
-    summarise(AIC = 2 * sum(nLL) + 2 * n_distinct(gamma)) %>% pull(AIC)
- }))
-
-bub <- bubbles %>% rowid_to_column("index")
-ms = mutate(bub, AIC = map(index, ~ {
-    add_row(selected, slice(bubbles,.)) %>%
-    unnest(bubble) %>% rename(residue_index = bubble) %>%
-    group_by(residue_index) %>% slice_min(oe) %>% select(residue_index, gamma = oe) %>% ungroup() %>%
-    inner_join(oe, by="residue_index)
-}))
-m
