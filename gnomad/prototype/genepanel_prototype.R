@@ -2,6 +2,10 @@
 
 library(tidyverse)
 
+GENE_ID <- "ACTA1"
+TRANSECT_ID <- "ENST00000366684"
+UNIPROT_ID <- "P68133"
+
 GENE_ID <- "ATP5F1B"
 TRANSECT_ID <- "ENST00000262030"
 UNIPROT_ID <- "P06576"
@@ -119,7 +123,7 @@ regions_list <- lapply(seq_len(n), function(i_residue) {
 
   # calculate the upper bound of the o/e confidence interval for each region
   regions_metric <- sapply(seq_len(n), function(i) {
-    get_region_metric(i, 0.0001, this_aa_regions, oe_data = oe)
+    get_region_metric(i, 0.05, this_aa_regions, oe_data = oe)
   })
 
   # find index of best region: that with the lowest upper bound of o/e CI
